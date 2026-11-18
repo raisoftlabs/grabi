@@ -7,10 +7,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.ArrowBack
 import androidx.compose.material3.Button
@@ -65,7 +62,6 @@ fun VpnBookHandoffScreen(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .verticalScroll(rememberScrollState())
             .padding(16.dp),
         verticalArrangement = Arrangement.spacedBy(12.dp),
     ) {
@@ -95,36 +91,42 @@ fun VpnBookHandoffScreen(
             update = { webView = it },
             modifier = Modifier
                 .fillMaxWidth()
-                .height(420.dp),
+                .weight(1f),
         )
-        Button(
-            onClick = {
-                probeGeneratedConfig(webView) { text ->
-                    if (text != null) {
-                        viewModel.importAssisted(text, "vpnbook")
-                    } else {
-                        message = notFound
-                    }
-                }
-            },
+        Row(
             modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.spacedBy(8.dp),
         ) {
-            Text(stringResource(R.string.vpnbook_import_generated))
+            Button(
+                onClick = {
+                    probeGeneratedConfig(webView) { text ->
+                        if (text != null) {
+                            viewModel.importAssisted(text, "vpnbook")
+                        } else {
+                            message = notFound
+                        }
+                    }
+                },
+                modifier = Modifier.weight(1f),
+            ) {
+                Text(stringResource(R.string.vpnbook_import_generated))
+            }
+            Button(
+                onClick = { viewModel.importAssisted(pasteText, "vpnbook") },
+                enabled = pasteText.isNotBlank(),
+                modifier = Modifier.weight(1f),
+            ) {
+                Text(stringResource(R.string.vpnbook_import_paste))
+            }
         }
         OutlinedTextField(
             value = pasteText,
             onValueChange = { pasteText = it },
             modifier = Modifier.fillMaxWidth(),
-            minLines = 3,
+            minLines = 2,
+            maxLines = 4,
             label = { Text(stringResource(R.string.vpnbook_paste_label)) },
         )
-        Button(
-            onClick = { viewModel.importAssisted(pasteText, "vpnbook") },
-            enabled = pasteText.isNotBlank(),
-            modifier = Modifier.fillMaxWidth(),
-        ) {
-            Text(stringResource(R.string.vpnbook_import_paste))
-        }
         message?.let {
             Text(
                 text = it,

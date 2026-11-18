@@ -18,7 +18,7 @@ import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.layout.systemBarsPadding
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
@@ -167,7 +167,7 @@ fun BrowserScreen(
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .systemBarsPadding()
+            .navigationBarsPadding()
             .border(1.dp, MaterialTheme.colorScheme.outlineVariant, RoundedCornerShape(18.dp))
             .clip(RoundedCornerShape(18.dp)),
         contentAlignment = Alignment.TopStart,
@@ -237,9 +237,6 @@ fun BrowserScreen(
                             contentDescription = stringResource(R.string.browser_tabs),
                         )
                     }
-                }
-                IconButton(onClick = onClose) {
-                    Icon(Icons.Rounded.Close, contentDescription = "Close Grabi Browser")
                 }
                 Box {
                     IconButton(onClick = { showMenu = true }) {

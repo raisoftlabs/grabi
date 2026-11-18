@@ -13,6 +13,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -74,7 +75,12 @@ fun GrabiApp(pendingLink: PendingLink, pendingNav: PendingNav) {
         }
     }
 
-    Box(Modifier.fillMaxSize().background(MaterialTheme.colorScheme.background)) {
+    Box(
+        Modifier
+            .fillMaxSize()
+            .statusBarsPadding()
+            .background(MaterialTheme.colorScheme.background),
+    ) {
         NavHost(
             navController = navController,
             startDestination = TopLevelDestination.HOME.route,
